@@ -1,3 +1,27 @@
 <resources>
     <string name="app_name">LJN fast &amp; safe</string>
+    <string name="name_toyota_corolla">Toyota Corolla</string>
+    <string name="desc_toyota_corolla">Imagen del Toyota Corolla</string>
+    <string name="precio_corolla">$18,500</string>
+    <string name="btn_reservar">Reservar vehículo</string>
+    <string name="btn_contactar">Contactar vendedor</string>
+    <string name="btn_ver_detalle">Ver Detalle de Vehículo</string>
+    <string name="oferta_mensual">OFERTA MENSUAL</string>
+    <string name="titulo_especificaciones">Especificaciones Técnicas</string>
+    <string name="label_anio">Año:</string>
+    <string name="label_km">Kilómetros:</string>
+    <string name="label_combustible">Combustible:</string>
+    <string name="label_transmision">Transmisión:</string>
+    <string name="label_color">Color:</string>
+    <string name="val_anio_corolla">2023</string>
+    <string name="val_km_corolla">15,000 km</string>
+    <string name="val_combustible_corolla">Híbrido</string>
+    <string name="val_transmision_corolla">Automática</string>
+    <string name="val_color_corolla">Burdeo</string>
+    <string name="titulo_otros_vehiculos">Otros Vehículos Disponibles</string>
+    <string name="nombre_coche_2">Hyundai Tucson</string>
+    <string name="nombre_coche_3">Seat León</string>
+    <string name="nombre_coche_4">Kia Sportage</string>
+    <string name="btn_login">Login</string>
+    <string name="desc_logo_app">Logo de LJN Fast Safe</string>
 </resources>

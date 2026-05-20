@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.LJNFastSafe" parent="Base.Theme.LJNFastSafe" />
+
+    <style name="ShapeAppearance.Circle" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>
