@@ -1,4 +1,4 @@
-package com.example.Controlador;
+package com.example.ljnfastsafe.model;
 
 public class Empleado {
     private String idEmpleado;
