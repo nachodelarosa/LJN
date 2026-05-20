@@ -8,8 +8,8 @@ public class Empleado {
     private String email;
     private String contrasena;
     private String cargo;
-    private String fechaRegistro; // Usamos String para manejar la fecha fácilmente en Android
-    private String idOficina;     // Clave foránea
+    private String fechaRegistro;
+    private String idOficina;
     private boolean activo;
 
     public Empleado() {}

@@ -52,36 +52,3 @@ CREATE TABLE IF NOT EXISTS COCHES (
     FOREIGN KEY (id_oficina) REFERENCES OFICINAS(id_oficina)
 );
 
-CREATE TABLE IF NOT EXISTS RESERVAS (
-    id_reserva VARCHAR(50) PRIMARY KEY,
-    id_cliente VARCHAR(50) NOT NULL,
-    id_coche VARCHAR(50) NOT NULL,
-    fecha_inicio DATE NOT NULL,
-    fecha_fin DATE NOT NULL,
-    estado VARCHAR(30) DEFAULT 'Pendiente',
-    fecha_reserva DATE NOT NULL,
-    FOREIGN KEY (id_cliente) REFERENCES CLIENTES(id_cliente),
-    FOREIGN KEY (id_coche) REFERENCES COCHES(id_coche)
-);
-
-CREATE TABLE IF NOT EXISTS FAVORITOS (
-    id_favorito VARCHAR(50) PRIMARY KEY,
-    id_cliente VARCHAR(50) NOT NULL,
-    id_coche VARCHAR(50) NOT NULL,
-    fecha_agregado DATE NOT NULL,
-    FOREIGN KEY (id_cliente) REFERENCES CLIENTES(id_cliente),
-    FOREIGN KEY (id_coche) REFERENCES COCHES(id_coche)
-);
-
-CREATE TABLE IF NOT EXISTS VENTAS (
-    id_venta VARCHAR(50) PRIMARY KEY,
-    id_cliente VARCHAR(50) NOT NULL,
-    id_coche VARCHAR(50) NOT NULL,
-    id_empleado VARCHAR(50) NOT NULL,
-    fecha_venta DATE NOT NULL,
-    precio_final DECIMAL(10, 2) NOT NULL,
-    metodo_pago VARCHAR(50) NOT NULL,
-    FOREIGN KEY (id_cliente) REFERENCES CLIENTES(id_cliente),
-    FOREIGN KEY (id_coche) REFERENCES COCHES(id_coche),
-    FOREIGN KEY (id_empleado) REFERENCES EMPLEADOS(id_empleado)
-);

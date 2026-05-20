@@ -6,9 +6,9 @@ public class Oficina {
     private String direccion;
     private String ciudad;
     private String telefono;
-    private boolean tieneTaller; // Mapeado de VARCHAR 'SI'/'NO'
+    private boolean tieneTaller;
     private int capacidadCoches;
-    private boolean activo;      // Mapeado de VARCHAR 'SI'/'NO'
+    private boolean activo;
 
     public Oficina() {}
 

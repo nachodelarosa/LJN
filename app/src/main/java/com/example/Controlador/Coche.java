@@ -8,13 +8,13 @@ public class Coche {
     private String modelo;
     private int anio;
     private int kilometros;
-    private double precio; // DECIMAL(10,2) se maneja excelente con double en Android
+    private double precio;
     private String matricula;
     private String combustible;
     private String transmision;
     private String color;
     private String estado;
-    private String idOficina; // Clave foránea
+    private String idOficina;
     private String fechaAlta;
     private boolean activo;
 
