@@ -24,10 +24,6 @@
         </activity>
 
         <activity
-            android:name=".DialogsActivity"
-            android:exported="false" />
-
-        <activity
             android:name=".DetalleVehiculoActivity"
             android:exported="false" />
 

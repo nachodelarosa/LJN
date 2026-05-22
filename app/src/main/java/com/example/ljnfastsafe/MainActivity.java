@@ -50,11 +50,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        findViewById(R.id.btnIrDialogos).setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, DialogsActivity.class);
-            startActivity(intent);
-        });
-
+      
         setupFavoriteButton(R.id.btnFavCoche2);
         setupFavoriteButton(R.id.btnFavCoche3);
         setupFavoriteButton(R.id.btnFavCoche4);
