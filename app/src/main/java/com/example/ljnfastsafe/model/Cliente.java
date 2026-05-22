@@ -1,5 +1,4 @@
-package com.example.Controlador;
-
+package com.example.ljnfastsafe.model;
 
 public class Cliente {
     private String idCliente;
