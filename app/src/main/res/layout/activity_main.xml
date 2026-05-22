@@ -144,14 +144,44 @@
                     android:src="@drawable/hyundaitucson"
                     android:contentDescription="@string/nombre_coche_2" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
                     android:layout_marginStart="16dp"
-                    android:text="@string/nombre_coche_2"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/nombre_coche_2"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/precio_coche_2"
+                        android:textColor="@color/accent_red"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/estado_disponible"
+                        android:textSize="12sp"
+                        android:textColor="@color/text_grey" />
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/btnFavCoche2"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_heart"
+                    android:contentDescription="Favorito" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -179,14 +209,44 @@
                     android:src="@drawable/seatleon"
                     android:contentDescription="@string/nombre_coche_3" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
                     android:layout_marginStart="16dp"
-                    android:text="@string/nombre_coche_3"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/nombre_coche_3"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/precio_coche_3"
+                        android:textColor="@color/accent_red"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/estado_reservado"
+                        android:textSize="12sp"
+                        android:textColor="@color/text_grey" />
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/btnFavCoche3"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_heart"
+                    android:contentDescription="Favorito" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -214,14 +274,44 @@
                     android:src="@drawable/kia"
                     android:contentDescription="@string/nombre_coche_4" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
                     android:layout_marginStart="16dp"
-                    android:text="@string/nombre_coche_4"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/nombre_coche_4"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/precio_coche_4"
+                        android:textColor="@color/accent_red"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/estado_disponible"
+                        android:textSize="12sp"
+                        android:textColor="@color/text_grey" />
+                </LinearLayout>
+
+                <ImageButton
+                    android:id="@+id/btnFavCoche4"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_heart"
+                    android:contentDescription="Favorito" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
