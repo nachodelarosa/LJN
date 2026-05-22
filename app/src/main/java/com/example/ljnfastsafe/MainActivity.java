@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         ScrollView scrollViewMain = findViewById(R.id.scrollViewMain);
         ImageView logoApp = findViewById(R.id.logoApp);
         logoApp.setOnClickListener(v -> {
-            // Al pulsar el logo en la Home, volvemos arriba del todo
+            // Al pulsar el logo en la Home, volvemos arriba
             scrollViewMain.fullScroll(ScrollView.FOCUS_UP);
         });
 
@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
-            //hoolña
         });
     }
 
@@ -89,15 +88,14 @@ public class MainActivity extends AppCompatActivity {
                 if (!vehiculos.isEmpty()) {
                     // Por simplicidad, mapeamos los primeros 3 a las tarjetas existentes
                     // Coche 2
-                    if (vehiculos.size() > 0) {
-                        actualizarTarjeta(R.id.cardCoche2, vehiculos.get(0));
-                    }
+                    actualizarTarjeta(R.id.cardCoche2, vehiculos.get(0));
+
                     // Coche 3
-                    if (vehiculos.size() > 1) {
+                    if (vehiculos.size() >= 2) {
                         actualizarTarjeta(R.id.cardCoche3, vehiculos.get(1));
                     }
                     // Coche 4
-                    if (vehiculos.size() > 2) {
+                    if (vehiculos.size() >= 3) {
                         actualizarTarjeta(R.id.cardCoche4, vehiculos.get(2));
                     }
                 } else {

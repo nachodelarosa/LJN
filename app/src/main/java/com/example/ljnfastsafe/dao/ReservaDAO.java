@@ -2,7 +2,6 @@ package com.example.ljnfastsafe.dao;
 
 import com.example.ljnfastsafe.model.Reserva;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
