@@ -1,3 +1,16 @@
+-- 0. Tabla de Oficinas
+CREATE TABLE OFICINAS (
+    id_oficina VARCHAR(50) PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    direccion VARCHAR(255) NOT NULL,
+    ciudad VARCHAR(100) NOT NULL,
+    telefono VARCHAR(20),
+    tiene_taller VARCHAR(2) DEFAULT 'NO',
+    capacidad_coches INT DEFAULT 0,
+    activo VARCHAR(2) DEFAULT 'SI'
+);
+
+
 -- 1. Tabla de Clientes
 CREATE TABLE CLIENTES (
    id_cliente VARCHAR(50) PRIMARY KEY,

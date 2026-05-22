@@ -28,7 +28,7 @@
             android:exported="false" />
 
         <activity
-            android:name="com.example.DetalleVehiculoActivity"
+            android:name=".DetalleVehiculoActivity"
             android:exported="false" />
 
         <activity

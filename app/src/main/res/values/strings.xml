@@ -38,4 +38,5 @@
     <string name="btn_confirm">Confirmación de Acción</string>
     <string name="btn_restricted">Restricción de Acceso</string>
     <string name="btn_back">Volver</string>
+    <string name="no_coches_encontrados">No se encontraron vehículos en la DB</string>
 </resources>

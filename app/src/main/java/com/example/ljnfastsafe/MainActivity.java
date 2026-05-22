@@ -18,15 +18,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.DetalleVehiculoActivity;
-import com.example.ljnfastsafe.dao.VehiculoDAO;
-import com.example.ljnfastsafe.model.Vehiculo;
+import com.example.ljnfastsafe.dao.CocheDAO;
+import com.example.ljnfastsafe.model.Coche;
 
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    private VehiculoDAO vehiculoDAO;
+    private CocheDAO cocheDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        vehiculoDAO = new VehiculoDAO();
-        cargarVehiculosDesdeDB();
+        cocheDAO = new CocheDAO();
+        cargarCochesDesdeDB();
 
         ScrollView scrollViewMain = findViewById(R.id.scrollViewMain);
         ImageView logoApp = findViewById(R.id.logoApp);
@@ -81,33 +81,31 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void cargarVehiculosDesdeDB() {
+    private void cargarCochesDesdeDB() {
         new Thread(() -> {
-            List<Vehiculo> vehiculos = vehiculoDAO.obtenerTodos();
+            List<Coche> coches = cocheDAO.obtenerCochesDisponibles();
             runOnUiThread(() -> {
-                if (!vehiculos.isEmpty()) {
-                    // Por simplicidad, mapeamos los primeros 3 a las tarjetas existentes
+                if (!coches.isEmpty()) {
                     // Coche 2
-                    actualizarTarjeta(R.id.cardCoche2, vehiculos.get(0));
+                    actualizarTarjeta(R.id.cardCoche2, coches.get(0));
 
                     // Coche 3
-                    if (vehiculos.size() >= 2) {
-                        actualizarTarjeta(R.id.cardCoche3, vehiculos.get(1));
+                    if (coches.size() >= 2) {
+                        actualizarTarjeta(R.id.cardCoche3, coches.get(1));
                     }
                     // Coche 4
-                    if (vehiculos.size() >= 3) {
-                        actualizarTarjeta(R.id.cardCoche4, vehiculos.get(2));
+                    if (coches.size() >= 3) {
+                        actualizarTarjeta(R.id.cardCoche4, coches.get(2));
                     }
                 } else {
-                    Toast.makeText(MainActivity.this, "No se encontraron vehículos en la DB", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.no_coches_encontrados, Toast.LENGTH_SHORT).show();
                 }
             });
         }).start();
     }
 
-    private void actualizarTarjeta(int cardId, Vehiculo v) {
+    private void actualizarTarjeta(int cardId, Coche c) {
         View card = findViewById(cardId);
-        // El layout es CardView -> LinearLayout -> [ImageView, LinearLayout(v) -> [TextView, TextView, TextView]]
         LinearLayout layoutHorizontal = (LinearLayout) ((CardView) card).getChildAt(0);
         LinearLayout layoutVertical = (LinearLayout) layoutHorizontal.getChildAt(1);
         
@@ -115,10 +113,9 @@ public class MainActivity extends AppCompatActivity {
         TextView txtPrecio = (TextView) layoutVertical.getChildAt(1);
         TextView txtEstado = (TextView) layoutVertical.getChildAt(2);
         
-        txtNombre.setText(v.getNombre());
-        txtPrecio.setText(v.getPrecio());
-        txtEstado.setText(v.getEstado());
-        
-        // La imagen requeriría lógica para cargar desde drawable por nombre o URL
+        String nombreCompleto = c.getMarca() + " " + c.getModelo();
+        txtNombre.setText(nombreCompleto);
+        txtPrecio.setText(String.format(Locale.getDefault(), "$%.2f", c.getPrecio()));
+        txtEstado.setText(c.getEstado());
     }
 }
