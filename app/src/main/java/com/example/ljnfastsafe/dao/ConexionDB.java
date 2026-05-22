@@ -5,8 +5,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConexionDB {
-    // 10.0.2.2 del emulador de Android
-    private static final String URL = "jdbc:mysql://10.0.2.2:3306/ljn_fast_safe";
+    // 10.0.2.2 del emulador de Android. Base de datos: fastandsafe
+    private static final String URL = "jdbc:mysql://10.0.2.2:3306/fastandsafe";
     private static final String USER = "root";
     private static final String PASSWORD = ""; 
 

@@ -19,14 +19,15 @@ public class ReservaDAO {
                     ps.setString(1, idCliente);
                     try (ResultSet rs = ps.executeQuery()) {
                         while (rs.next()) {
-                            lista.add(new Reserva(
-                                rs.getString("id_reserva"),
-                                rs.getString("id_cliente"),
-                                rs.getString("id_coche"),
-                                rs.getDate("fecha_inicio"),
-                                rs.getDate("fecha_fin"),
-                                rs.getString("estado")
-                            ));
+                            Reserva r = new Reserva();
+                            r.setIdReserva(rs.getString("id_reserva"));
+                            r.setIdCliente(rs.getString("id_cliente"));
+                            r.setIdCoche(rs.getString("id_coche"));
+                            r.setFechaInicio(rs.getDate("fecha_inicio"));
+                            r.setFechaFin(rs.getDate("fecha_fin"));
+                            r.setEstado(rs.getString("estado"));
+                            r.setFechaReserva(rs.getDate("fecha_reserva"));
+                            lista.add(r);
                         }
                     }
                 }
@@ -42,7 +43,7 @@ public class ReservaDAO {
         try (Connection conn = ConexionDB.getConexion()) {
             if (conn != null) {
                 try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                    ps.setString(1, r.getId());
+                    ps.setString(1, r.getIdReserva());
                     ps.setString(2, r.getIdCliente());
                     ps.setString(3, r.getIdCoche());
                     ps.setDate(4, new java.sql.Date(r.getFechaInicio().getTime()));

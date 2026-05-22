@@ -2,7 +2,7 @@ package com.example.ljnfastsafe;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -40,17 +40,12 @@ public class MainActivity extends AppCompatActivity {
         ScrollView scrollViewMain = findViewById(R.id.scrollViewMain);
         ImageView logoApp = findViewById(R.id.logoApp);
         logoApp.setOnClickListener(v -> {
-            // Al pulsar el logo en la Home, volvemos arriba
+            // Al pulsar el logo, refrescamos los datos además de subir
             scrollViewMain.fullScroll(ScrollView.FOCUS_UP);
+            cargarCochesDesdeDB();
+            Toast.makeText(this, "Refrescando datos...", Toast.LENGTH_SHORT).show();
         });
 
-        Button btnVerDetalle = findViewById(R.id.btnVerDetalle);
-        btnVerDetalle.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, DetalleVehiculoActivity.class);
-            startActivity(intent);
-        });
-
-      
         setupFavoriteButton(R.id.btnFavCoche2);
         setupFavoriteButton(R.id.btnFavCoche3);
         setupFavoriteButton(R.id.btnFavCoche4);
@@ -64,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupFavoriteButton(int resId) {
         ImageButton btn = findViewById(resId);
-        btn.setTag(false); // false = not favorite
+        btn.setTag(false);
         btn.setOnClickListener(v -> {
             boolean isFavorite = (boolean) v.getTag();
             if (isFavorite) {
@@ -79,39 +74,77 @@ public class MainActivity extends AppCompatActivity {
 
     private void cargarCochesDesdeDB() {
         new Thread(() -> {
-            List<Coche> coches = cocheDAO.obtenerCochesDisponibles();
-            runOnUiThread(() -> {
-                if (!coches.isEmpty()) {
-                    // Coche 2
-                    actualizarTarjeta(R.id.cardCoche2, coches.get(0));
+            try {
+                List<Coche> coches = cocheDAO.obtenerCochesDisponibles();
+                runOnUiThread(() -> {
+                    if (coches != null && !coches.isEmpty()) {
+                        Log.d("MainActivity", "Datos recibidos de la DB. Actualizando UI...");
+                        
+                        // Oferta Mensual (Cualquier coche, por ejemplo el primero)
+                        actualizarOferta(coches.get(0));
 
-                    // Coche 3
-                    if (coches.size() >= 2) {
-                        actualizarTarjeta(R.id.cardCoche3, coches.get(1));
+                        // Otros Vehículos (Mapeo dinámico por posición)
+                        if (coches.size() >= 2) actualizarTarjeta(R.id.cardCoche2, coches.get(1));
+                        if (coches.size() >= 3) actualizarTarjeta(R.id.cardCoche3, coches.get(2));
+                        if (coches.size() >= 4) actualizarTarjeta(R.id.cardCoche4, coches.get(3));
+                        
+                    } else {
+                        Log.w("MainActivity", "No se recibieron coches de la DB");
+                        Toast.makeText(MainActivity.this, "No se pudieron cargar datos de MySQL", Toast.LENGTH_LONG).show();
                     }
-                    // Coche 4
-                    if (coches.size() >= 3) {
-                        actualizarTarjeta(R.id.cardCoche4, coches.get(2));
-                    }
-                } else {
-                    Toast.makeText(MainActivity.this, R.string.no_coches_encontrados, Toast.LENGTH_SHORT).show();
-                }
-            });
+                });
+            } catch (Exception e) {
+                Log.e("MainActivity", "Error en hilo de carga: " + e.getMessage());
+            }
         }).start();
     }
 
+    private void actualizarOferta(Coche oferta) {
+        Button btn = findViewById(R.id.btnVerDetalle);
+        btn.setOnClickListener(v -> abrirDetalle(oferta.getIdCoche()));
+        
+        ImageView imgOferta = findViewById(R.id.imgOferta);
+        cargarImagenVehiculo(imgOferta, oferta);
+    }
+
+    private void abrirDetalle(String idCoche) {
+        Intent intent = new Intent(MainActivity.this, DetalleVehiculoActivity.class);
+        intent.putExtra("ID_COCHE", idCoche);
+        startActivity(intent);
+    }
+
     private void actualizarTarjeta(int cardId, Coche c) {
-        View card = findViewById(cardId);
-        LinearLayout layoutHorizontal = (LinearLayout) ((CardView) card).getChildAt(0);
+        CardView card = findViewById(cardId);
+        if (card == null) return;
+
+        card.setOnClickListener(v -> abrirDetalle(c.getIdCoche()));
+
+        LinearLayout layoutHorizontal = (LinearLayout) card.getChildAt(0);
+        ImageView imgVehiculo = (ImageView) layoutHorizontal.getChildAt(0);
         LinearLayout layoutVertical = (LinearLayout) layoutHorizontal.getChildAt(1);
         
         TextView txtNombre = (TextView) layoutVertical.getChildAt(0);
         TextView txtPrecio = (TextView) layoutVertical.getChildAt(1);
         TextView txtEstado = (TextView) layoutVertical.getChildAt(2);
         
-        String nombreCompleto = c.getMarca() + " " + c.getModelo();
-        txtNombre.setText(nombreCompleto);
+        txtNombre.setText(c.getMarca() + " " + c.getModelo());
         txtPrecio.setText(String.format(Locale.getDefault(), "$%.2f", c.getPrecio()));
         txtEstado.setText(c.getEstado());
+
+        cargarImagenVehiculo(imgVehiculo, c);
+    }
+
+    private void cargarImagenVehiculo(ImageView img, Coche c) {
+        String modelo = c.getModelo().toLowerCase().replace(" ", "").replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u");
+        String marca = c.getMarca().toLowerCase();
+
+        int resId = getResources().getIdentifier(modelo, "drawable", getPackageName());
+        if (resId == 0) {
+            resId = getResources().getIdentifier(marca, "drawable", getPackageName());
+        }
+
+        if (resId != 0) {
+            img.setImageResource(resId);
+        }
     }
 }

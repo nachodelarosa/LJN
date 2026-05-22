@@ -81,6 +81,7 @@
                 android:layout_marginBottom="12dp"/>
 
             <GridLayout
+                android:id="@+id/main_grid_specs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="2"
