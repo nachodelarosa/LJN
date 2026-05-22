@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Fast &amp; Safe"
+            android:text="@string/app_name_text"
             android:textSize="36sp"
             android:textStyle="bold"
             android:textColor="@color/primary_dark"
@@ -181,7 +181,7 @@
                     android:layout_gravity="center_vertical"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_heart"
-                    android:contentDescription="Favorito" />
+                    android:contentDescription="@string/desc_fav" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -246,7 +246,7 @@
                     android:layout_gravity="center_vertical"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_heart"
-                    android:contentDescription="Favorito" />
+                    android:contentDescription="@string/desc_fav" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -311,7 +311,7 @@
                     android:layout_gravity="center_vertical"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_heart"
-                    android:contentDescription="Favorito" />
+                    android:contentDescription="@string/desc_fav" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

@@ -29,4 +29,13 @@
     <string name="precio_coche_4">$19,500</string>
     <string name="estado_disponible">Disponible</string>
     <string name="estado_reservado">Reservado</string>
+    <string name="btn_ver_dialogos">Ver Diálogos</string>
+    <string name="app_name_text">Fast &amp; Safe</string>
+    <string name="desc_fav">Favorito</string>
+    <string name="title_dialogs">Ejemplos de Ventanas Emergentes</string>
+    <string name="btn_error">Error de Validación</string>
+    <string name="btn_success">Operación Correcta</string>
+    <string name="btn_confirm">Confirmación de Acción</string>
+    <string name="btn_restricted">Restricción de Acceso</string>
+    <string name="btn_back">Volver</string>
 </resources>
