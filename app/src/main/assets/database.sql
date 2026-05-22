@@ -55,4 +55,4 @@ CREATE TABLE FAVORITOS (
 INSERT INTO COCHES VALUES ('C001','Toyota','Corolla',2023,15000,16500.00,'1234ABC','Hibrido','Automática','Burdeo','Disponible',CURDATE(),'SI');
 INSERT INTO COCHES VALUES ('C002','Hyundai','Tucson',2022,25000,22000.00,'5678DEF','Gasolina','Automática','Gris','Disponible',CURDATE(),'SI');
 INSERT INTO COCHES VALUES ('C003','Seat','Leon',2021,40000,15800.00,'9101GHI','Diesel','Manual','Blanco','Reservado',CURDATE(),'SI');
-INSERT INTO COCHES VALUES ('C004','Kia','Sportage',2023,10000,20000.00,'1122JKL','Gasolina','Automática','Negro','Disponible',CURDATE(),'SI');
+INSERT INTO COCHES VALUES ('C004','Kia','Sportage',2023,10000,19000.00,'1122JKL','Gasolina','Automática','Negro','Disponible',CURDATE(),'SI');
