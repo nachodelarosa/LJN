@@ -96,6 +96,27 @@
                     android:src="@drawable/toyota_corolla"
                     android:contentDescription="@string/desc_toyota_corolla" />
 
+                <TextView
+                    android:id="@+id/txtNombreOferta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="8dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="@string/name_toyota_corolla" />
+
+                <TextView
+                    android:id="@+id/txtPrecioOferta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginBottom="4dp"
+                    android:textColor="#2E7D32"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:text="@string/precio_corolla" />
+
                 <Button
                     android:id="@+id/btnVerDetalle"
                     android:layout_width="match_parent"

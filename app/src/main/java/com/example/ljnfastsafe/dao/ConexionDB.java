@@ -7,8 +7,8 @@ import java.sql.SQLException;
 public class ConexionDB {
     // 10.0.2.2 del emulador de Android. Base de datos: fastandsafe
     private static final String URL = "jdbc:mysql://10.0.2.2:3306/fastandsafe";
-    private static final String USER = "root";
-    private static final String PASSWORD = ""; 
+    private static final String USER = "tuusuario";
+    private static final String PASSWORD = "TuPassword123!";
 
     public static Connection getConexion() throws SQLException {
         try {

@@ -17,7 +17,7 @@ public class DetalleVehiculoActivity extends AppCompatActivity {
 
     private CocheDAO cocheDAO;
     private ImageView imgVehiculo, logoApp;
-    private TextView txtNombre, txtPrecio;
+    private TextView txtNombre, txtPrecio, txtAnio, txtKm, txtCombustible, txtTransmision, txtColor;
     private Button btnReservar, btnContactar;
 
     @Override
@@ -34,12 +34,6 @@ public class DetalleVehiculoActivity extends AppCompatActivity {
         }
 
         logoApp.setOnClickListener(v -> finish());
-
-        btnReservar.setOnClickListener(v ->
-                Toast.makeText(this, "Reserva solicitada para el vehículo", Toast.LENGTH_SHORT).show());
-
-        btnContactar.setOnClickListener(v ->
-                Toast.makeText(this, "Contactando con el asesor de ventas...", Toast.LENGTH_SHORT).show());
     }
 
     private void inicializarVistas() {
@@ -47,48 +41,40 @@ public class DetalleVehiculoActivity extends AppCompatActivity {
         imgVehiculo = findViewById(R.id.imgVehiculo);
         txtNombre = findViewById(R.id.txtNombre);
         txtPrecio = findViewById(R.id.txtPrecio);
+        txtAnio = findViewById(R.id.txtAnioDetalle);
+        txtKm = findViewById(R.id.txtKmDetalle);
+        txtCombustible = findViewById(R.id.txtCombustibleDetalle);
+        txtTransmision = findViewById(R.id.txtTransmisionDetalle);
+        txtColor = findViewById(R.id.txtColorDetalle);
         btnReservar = findViewById(R.id.btnReservar);
         btnContactar = findViewById(R.id.btnContactar);
     }
 
     private void cargarDatosVehiculo(String id) {
         new Thread(() -> {
-            Coche c = cocheDAO.obtenerPorId(id);
-            if (c != null) {
+            try {
+                Coche c = cocheDAO.obtenerPorId(id);
                 runOnUiThread(() -> {
-                    String nombreCompleto = c.getMarca() + " " + c.getModelo();
-                    txtNombre.setText(nombreCompleto);
-                    txtPrecio.setText(String.format(Locale.getDefault(), "$%.2f", c.getPrecio()));
-                    cargarImagen(c);
-                    actualizarEspecificaciones(c);
+                    if (c != null) {
+                        txtNombre.setText(c.getMarca() + " " + c.getModelo());
+                        txtPrecio.setText(String.format(Locale.getDefault(), "$%.2f", c.getPrecio()));
+                        txtAnio.setText(String.valueOf(c.getAnio()));
+                        txtKm.setText(c.getKilometros() + " km");
+                        txtCombustible.setText(c.getCombustible());
+                        txtTransmision.setText(c.getTransmision());
+                        txtColor.setText(c.getColor());
+                        cargarImagen(c);
+                    }
                 });
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }).start();
     }
 
-    private void actualizarEspecificaciones(Coche c) {
-        android.widget.GridLayout grid = findViewById(R.id.main_grid_specs);
-        if (grid != null && grid.getChildCount() >= 10) {
-            ((TextView) grid.getChildAt(1)).setText(String.valueOf(c.getAnio()));
-            String kmText = c.getKilometros() + " km";
-            ((TextView) grid.getChildAt(3)).setText(kmText);
-            ((TextView) grid.getChildAt(5)).setText(c.getCombustible());
-            ((TextView) grid.getChildAt(7)).setText(c.getTransmision());
-            ((TextView) grid.getChildAt(9)).setText(c.getColor());
-        }
-    }
-
     private void cargarImagen(Coche c) {
         String modelo = c.getModelo().toLowerCase().replace(" ", "").replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u");
-        String marca = c.getMarca().toLowerCase();
-
         int resId = getResources().getIdentifier(modelo, "drawable", getPackageName());
-        if (resId == 0) {
-            resId = getResources().getIdentifier(marca, "drawable", getPackageName());
-        }
-
-        if (resId != 0) {
-            imgVehiculo.setImageResource(resId);
-        }
+        if (resId != 0) imgVehiculo.setImageResource(resId);
     }
 }
