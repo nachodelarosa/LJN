@@ -42,15 +42,15 @@
                 android:id="@+id/imgVehiculo"
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
-                android:src="@drawable/toyota_corolla"
-                android:scaleType="centerCrop"
-                android:contentDescription="@string/desc_toyota_corolla"/>
+                android:src="@drawable/ljnfastsafe_logo"
+                android:scaleType="centerInside"
+                android:contentDescription="Imagen del Vehículo"/>
 
             <TextView
                 android:id="@+id/txtNombre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/name_toyota_corolla"
+                android:text="Nombre del Vehículo"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:layout_marginTop="16dp"/>
@@ -59,7 +59,7 @@
                 android:id="@+id/txtPrecio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/precio_corolla"
+                android:text="$0.00"
                 android:textSize="22sp"
                 android:layout_marginTop="8dp"
                 android:textColor="#2E7D32"
@@ -170,13 +170,14 @@
                 app:backgroundTint="@null"/>
 
             <Button
-                android:id="@+id/btnContactar"
+                android:id="@+id/btnEliminarReserva"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:text="@string/btn_contactar"
+                android:text="ELIMINAR MI RESERVA"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/btn_secondary"
-                android:textColor="@color/primary_dark"
+                android:textColor="#D32F2F"
+                android:visibility="gone"
                 app:backgroundTint="@null"/>
 
         </LinearLayout>

@@ -12,19 +12,19 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="24dp"
+        android:paddingTop="32dp"
+        android:paddingBottom="32dp"
         tools:context=".MainActivity">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/logoApp"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginStart="20dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:contentDescription="@string/desc_logo_app"
-            android:elevation="4dp"
+            android:elevation="6dp"
             android:focusable="true"
             android:scaleType="centerCrop"
             android:src="@drawable/ljnfastsafe_logo"
@@ -33,41 +33,55 @@
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Circle" />
 
         <ImageButton
+            android:id="@+id/btnVerFavoritos"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Ver Favoritos"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_heart_filled"
+            app:layout_constraintBottom_toBottomOf="@+id/logoApp"
+            app:layout_constraintEnd_toStartOf="@+id/btnLogin"
+            app:layout_constraintTop_toTopOf="@+id/logoApp" />
+
+        <ImageButton
             android:id="@+id/btnLogin"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="20dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/btn_login"
             android:scaleType="fitCenter"
             android:src="@drawable/logo_login"
+            app:layout_constraintBottom_toBottomOf="@+id/logoApp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/logoApp" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="@string/app_name_text"
-            android:textSize="36sp"
-            android:textStyle="bold"
-            android:textColor="@color/primary_dark"
             android:letterSpacing="0.05"
+            android:text="@string/app_name_text"
+            android:textColor="@color/primary_dark"
+            android:textSize="40sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/logoApp" />
 
         <TextView
             android:id="@+id/txtOfertaTitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
             android:text="@string/oferta_mensual"
-            android:textColor="#C62828"
-            android:textSize="28sp"
+            android:textColor="#D32F2F"
+            android:textSize="26sp"
             android:textStyle="bold"
+            android:letterSpacing="0.02"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -76,9 +90,9 @@
             android:id="@+id/cardOferta"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
+            android:layout_margin="20dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
             app:layout_constraintTop_toBottomOf="@+id/txtOfertaTitulo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -91,41 +105,48 @@
                 <ImageView
                     android:id="@+id/imgOferta"
                     android:layout_width="match_parent"
-                    android:layout_height="180dp"
+                    android:layout_height="200dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/toyota_corolla"
                     android:contentDescription="@string/desc_toyota_corolla" />
 
-                <TextView
-                    android:id="@+id/txtNombreOferta"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="8dp"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:text="@string/name_toyota_corolla" />
-
-                <TextView
-                    android:id="@+id/txtPrecioOferta"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginBottom="4dp"
-                    android:textColor="#2E7D32"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:text="@string/precio_corolla" />
-
-                <Button
-                    android:id="@+id/btnVerDetalle"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    android:text="@string/btn_ver_detalle"
-                    android:background="@drawable/btn_primary"
-                    android:textColor="@color/white"
-                    app:backgroundTint="@null" />
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/txtNombreOferta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:text="@string/name_toyota_corolla" />
+
+                    <TextView
+                        android:id="@+id/txtPrecioOferta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="#2E7D32"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:text="@string/precio_corolla" />
+
+                    <Button
+                        android:id="@+id/btnVerDetalle"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/btn_ver_detalle"
+                        android:background="@drawable/btn_primary"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textAllCaps="true"
+                        app:backgroundTint="@null" />
+                </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -133,11 +154,12 @@
             android:id="@+id/txtOtrosTitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginStart="20dp"
             android:text="@string/titulo_otros_vehiculos"
-            android:textSize="20sp"
+            android:textSize="22sp"
             android:textStyle="bold"
+            android:textColor="@color/primary_dark"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardOferta" />
 
@@ -146,21 +168,21 @@
             android:id="@+id/cardCoche2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="12dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="2dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="3dp"
             app:layout_constraintTop_toBottomOf="@+id/txtOtrosTitulo">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="12dp">
 
                 <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="70dp"
+                    android:layout_width="110dp"
+                    android:layout_height="80dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/hyundaitucson"
                     android:contentDescription="@string/nombre_coche_2" />
@@ -178,31 +200,36 @@
                         android:layout_height="wrap_content"
                         android:text="@string/nombre_coche_2"
                         android:textSize="18sp"
+                        android:textColor="@color/black"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
                         android:text="@string/precio_coche_2"
-                        android:textColor="@color/accent_red"
+                        android:textColor="#C62828"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:text="@string/estado_disponible"
-                        android:textSize="12sp"
-                        android:textColor="@color/text_grey" />
+                        android:textSize="13sp"
+                        android:textColor="#616161" />
                 </LinearLayout>
 
                 <ImageButton
                     android:id="@+id/btnFavCoche2"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
                     android:layout_gravity="center_vertical"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_heart"
-                    android:contentDescription="@string/desc_fav" />
+                    android:contentDescription="@string/desc_fav"
+                    android:padding="8dp"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -211,21 +238,21 @@
             android:id="@+id/cardCoche3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="2dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="12dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="3dp"
             app:layout_constraintTop_toBottomOf="@+id/cardCoche2">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="12dp">
 
                 <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="70dp"
+                    android:layout_width="110dp"
+                    android:layout_height="80dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/seatleon"
                     android:contentDescription="@string/nombre_coche_3" />
@@ -243,32 +270,36 @@
                         android:layout_height="wrap_content"
                         android:text="@string/nombre_coche_3"
                         android:textSize="18sp"
+                        android:textColor="@color/black"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
                         android:text="@string/precio_coche_3"
-                        android:textColor="@color/accent_red"
+                        android:textColor="#C62828"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:text="@string/estado_reservado"
-                        android:textSize="12sp"
-                        android:textColor="@color/text_grey" />
+                        android:textSize="13sp"
+                        android:textColor="#616161" />
                 </LinearLayout>
 
                 <ImageButton
                     android:id="@+id/btnFavCoche3"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
                     android:layout_gravity="center_vertical"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/desc_fav"
                     android:src="@drawable/ic_heart"
-                    tools:ignore="TouchTargetSizeCheck" />
+                    android:contentDescription="@string/desc_fav"
+                    android:padding="8dp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -277,21 +308,21 @@
             android:id="@+id/cardCoche4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="2dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="12dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="3dp"
             app:layout_constraintTop_toBottomOf="@+id/cardCoche3">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="12dp">
 
                 <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="70dp"
+                    android:layout_width="110dp"
+                    android:layout_height="80dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/kia"
                     android:contentDescription="@string/nombre_coche_4" />
@@ -309,31 +340,36 @@
                         android:layout_height="wrap_content"
                         android:text="@string/nombre_coche_4"
                         android:textSize="18sp"
+                        android:textColor="@color/black"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
                         android:text="@string/precio_coche_4"
-                        android:textColor="@color/accent_red"
+                        android:textColor="#C62828"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:text="@string/estado_disponible"
-                        android:textSize="12sp"
-                        android:textColor="@color/text_grey" />
+                        android:textSize="13sp"
+                        android:textColor="#616161" />
                 </LinearLayout>
 
                 <ImageButton
                     android:id="@+id/btnFavCoche4"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
                     android:layout_gravity="center_vertical"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_heart"
-                    android:contentDescription="@string/desc_fav" />
+                    android:contentDescription="@string/desc_fav"
+                    android:padding="8dp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

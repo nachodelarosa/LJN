@@ -18,8 +18,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.ljnfastsafe.dao.ClienteDAO;
 import com.example.ljnfastsafe.dao.CocheDAO;
+import com.example.ljnfastsafe.dao.FavoritoDAO;
 import com.example.ljnfastsafe.model.Coche;
+import com.example.ljnfastsafe.utils.SessionManager;
 
 import java.util.List;
 import java.util.Locale;
@@ -27,6 +30,9 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
     private CocheDAO cocheDAO;
+    private ClienteDAO clienteDAO;
+    private FavoritoDAO favoritoDAO;
+    private SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +40,18 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+        session = new SessionManager(this);
+        if (!session.isLoggedIn()) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
         cocheDAO = new CocheDAO();
+        clienteDAO = new ClienteDAO();
+        favoritoDAO = new FavoritoDAO();
+
         cargarCochesDesdeDB();
 
         ScrollView scrollViewMain = findViewById(R.id.scrollViewMain);
@@ -48,13 +65,15 @@ public class MainActivity extends AppCompatActivity {
 
         ImageButton btnLoginIcon = findViewById(R.id.btnLogin);
         btnLoginIcon.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            Intent intent = new Intent(MainActivity.this, PerfilActivity.class);
             startActivity(intent);
         });
 
-        setupFavoriteButton(R.id.btnFavCoche2);
-        setupFavoriteButton(R.id.btnFavCoche3);
-        setupFavoriteButton(R.id.btnFavCoche4);
+        ImageButton btnVerFavoritos = findViewById(R.id.btnVerFavoritos);
+        btnVerFavoritos.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, FavoritosActivity.class);
+            startActivity(intent);
+        });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -63,19 +82,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void setupFavoriteButton(int resId) {
-        ImageButton btn = findViewById(resId);
-        btn.setTag(false);
-        btn.setOnClickListener(v -> {
-            boolean isFavorite = (boolean) v.getTag();
-            if (isFavorite) {
-                btn.setImageResource(R.drawable.ic_heart);
-                v.setTag(false);
-            } else {
-                btn.setImageResource(R.drawable.ic_heart_filled);
-                v.setTag(true);
-            }
-        });
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Refrescar la lista al volver para actualizar los corazones de favoritos
+        cargarCochesDesdeDB();
     }
 
     private void cargarCochesDesdeDB() {
@@ -132,6 +143,10 @@ public class MainActivity extends AppCompatActivity {
         TextView txtNombre = (TextView) layoutVertical.getChildAt(0);
         TextView txtPrecio = (TextView) layoutVertical.getChildAt(1);
         TextView txtEstado = (TextView) layoutVertical.getChildAt(2);
+
+        // Obtener el botón de favoritos del layout horizontal
+        ImageButton btnFav = (ImageButton) layoutHorizontal.getChildAt(2);
+        setupFavoriteButtonDynamic(btnFav, c);
         
         txtNombre.setText(c.getMarca() + " " + c.getModelo());
         txtPrecio.setText(String.format(Locale.getDefault(), "$%.2f", c.getPrecio()));
@@ -140,17 +155,72 @@ public class MainActivity extends AppCompatActivity {
         cargarImagenVehiculo(imgVehiculo, c);
     }
 
-    private void cargarImagenVehiculo(ImageView img, Coche c) {
-        String modelo = c.getModelo().toLowerCase().replace(" ", "").replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u");
-        String marca = c.getMarca().toLowerCase();
+    private void setupFavoriteButtonDynamic(ImageButton btn, Coche c) {
+        // Verificar estado inicial
+        new Thread(() -> {
+            boolean esFav = favoritoDAO.esFavorito(session.getUserId(), c.getIdCoche());
+            runOnUiThread(() -> {
+                btn.setTag(esFav);
+                btn.setImageResource(esFav ? R.drawable.ic_heart_filled : R.drawable.ic_heart);
+            });
+        }).start();
 
-        int resId = getResources().getIdentifier(modelo, "drawable", getPackageName());
+        btn.setOnClickListener(v -> {
+            if ("Reservado".equalsIgnoreCase(c.getEstado())) {
+                new androidx.appcompat.app.AlertDialog.Builder(this)
+                        .setTitle("Vehículo Reservado")
+                        .setMessage("No puede ser añadido a favoritos porque el vehículo ya ha sido reservado.")
+                        .setPositiveButton("Entendido", null)
+                        .show();
+            } else {
+                boolean isFavorite = (boolean) v.getTag();
+                new Thread(() -> {
+                    boolean exito;
+                    if (isFavorite) {
+                        exito = favoritoDAO.eliminarFavorito(session.getUserId(), c.getIdCoche());
+                    } else {
+                        exito = favoritoDAO.agregarFavorito(session.getUserId(), c.getIdCoche());
+                    }
+
+                    if (exito) {
+                        runOnUiThread(() -> {
+                            boolean nuevoEstado = !isFavorite;
+                            btn.setTag(nuevoEstado);
+                            btn.setImageResource(nuevoEstado ? R.drawable.ic_heart_filled : R.drawable.ic_heart);
+                            Toast.makeText(this, nuevoEstado ? "Añadido a favoritos" : "Eliminado de favoritos", Toast.LENGTH_SHORT).show();
+                        });
+                    }
+                }).start();
+            }
+        });
+    }
+
+    private void cargarImagenVehiculo(ImageView img, Coche c) {
+        String marca = c.getMarca().toLowerCase().replace(" ", "");
+        String modelo = c.getModelo().toLowerCase().replace(" ", "").replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u");
+
+        // 1. Intentar marca + modelo (ej: hyundaitucson)
+        int resId = getResources().getIdentifier(marca + modelo, "drawable", getPackageName());
+
+        // 2. Intentar solo modelo (ej: corolla)
+        if (resId == 0) {
+            resId = getResources().getIdentifier(modelo, "drawable", getPackageName());
+        }
+
+        // 3. Intentar solo marca (ej: kia)
         if (resId == 0) {
             resId = getResources().getIdentifier(marca, "drawable", getPackageName());
         }
 
+        // 4. Intentar marca + _ + modelo (ej: toyota_corolla)
+        if (resId == 0) {
+            resId = getResources().getIdentifier(marca + "_" + modelo, "drawable", getPackageName());
+        }
+
         if (resId != 0) {
             img.setImageResource(resId);
+        } else {
+            img.setImageResource(R.drawable.ljnfastsafe_logo);
         }
     }
 }

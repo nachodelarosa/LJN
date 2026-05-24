@@ -11,7 +11,8 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/ljnfastsafe_logo"
         android:supportsRtl="true"
-        android:theme="@style/Theme.LJNFastSafe">
+        android:theme="@style/Theme.LJNFastSafe"
+        android:usesCleartextTraffic="true">
 
         <activity
             android:name=".SplashActivity"
@@ -33,6 +34,14 @@
 
         <activity
             android:name=".RegisterActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".FavoritosActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".PerfilActivity"
             android:exported="false" />
 
         <activity

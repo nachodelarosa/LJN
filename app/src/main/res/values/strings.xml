@@ -4,7 +4,6 @@
     <string name="desc_toyota_corolla">Imagen del Toyota Corolla</string>
     <string name="precio_corolla">$16,500</string>
     <string name="btn_reservar">Reservar vehículo</string>
-    <string name="btn_contactar">Contactar vendedor</string>
     <string name="btn_ver_detalle">Ver Detalle de Vehículo</string>
     <string name="oferta_mensual">OFERTA MENSUAL</string>
     <string name="titulo_especificaciones">Especificaciones Técnicas</string>

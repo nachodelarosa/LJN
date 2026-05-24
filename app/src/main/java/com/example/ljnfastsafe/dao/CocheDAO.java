@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class CocheDAO {
 
@@ -37,14 +36,10 @@ public class CocheDAO {
                         coche.setActivo(rs.getString("activo"));
                         lista.add(coche);
                     }
-                    Log.d("CocheDAO", "Coches cargados: " + lista.size());
                 }
-            } else {
-                Log.e("CocheDAO", "La conexión es nula");
             }
         } catch (SQLException e) {
             Log.e("CocheDAO", "Error SQL: " + e.getMessage());
-            e.printStackTrace();
         }
         return lista;
     }
@@ -80,5 +75,21 @@ public class CocheDAO {
             Log.e("CocheDAO", "Error al obtener coche por ID: " + e.getMessage());
         }
         return null;
+    }
+
+    public boolean actualizarEstado(String id, String nuevoEstado) {
+        String sql = "UPDATE COCHES SET estado = ? WHERE id_coche = ?";
+        try (Connection conn = ConexionDB.getConexion()) {
+            if (conn != null) {
+                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                    ps.setString(1, nuevoEstado);
+                    ps.setString(2, id);
+                    return ps.executeUpdate() > 0;
+                }
+            }
+        } catch (SQLException e) {
+            Log.e("CocheDAO", "Error al actualizar estado: " + e.getMessage());
+        }
+        return false;
     }
 }

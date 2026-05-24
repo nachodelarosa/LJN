@@ -6,13 +6,13 @@ import java.sql.SQLException;
 
 public class ConexionDB {
     // 10.0.2.2 del emulador de Android. Base de datos: fastandsafe
-    private static final String URL = "jdbc:mysql://10.0.2.2:3306/fastandsafe";
-    private static final String USER = "tuusuario";
-    private static final String PASSWORD = "TuPassword123!";
+    private static final String URL = "jdbc:mysql://10.0.2.2:3306/fastandsafe?useSSL=false&allowPublicKeyRetrieval=true";
+    private static final String USER = "root";
+    private static final String PASSWORD = "root1234";
 
     public static Connection getConexion() throws SQLException {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
