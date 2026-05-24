@@ -58,4 +58,29 @@ public class ClienteDAO {
         }
         return false;
     }
+
+    public Cliente validarLogin(String email, String password) {
+        String sql = "SELECT * FROM CLIENTES WHERE email = ? AND contrasena = ? AND activo = 'SI'";
+        try (Connection conn = ConexionDB.getConexion()) {
+            if (conn != null) {
+                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                    ps.setString(1, email);
+                    ps.setString(2, password);
+                    try (ResultSet rs = ps.executeQuery()) {
+                        if (rs.next()) {
+                            Cliente c = new Cliente();
+                            c.setIdCliente(rs.getString("id_cliente"));
+                            c.setNombre(rs.getString("nombre"));
+                            c.setApellidos(rs.getString("apellidos"));
+                            c.setEmail(rs.getString("email"));
+                            return c;
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

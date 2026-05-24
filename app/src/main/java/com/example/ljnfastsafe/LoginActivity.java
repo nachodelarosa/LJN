@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ljnfastsafe.dao.ClienteDAO;
+import com.example.ljnfastsafe.model.Cliente;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class LoginActivity extends AppCompatActivity {
@@ -15,11 +17,14 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText etEmail, etPassword;
     private Button btnLogin;
     private TextView tvGoToRegister;
+    private ClienteDAO clienteDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        clienteDAO = new ClienteDAO();
 
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
@@ -33,8 +38,22 @@ public class LoginActivity extends AppCompatActivity {
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Por favor, rellena todos los campos", Toast.LENGTH_SHORT).show();
             } else {
-                // Aquí iría la lógica de base de datos
-                Toast.makeText(this, "Intento de login para: " + email, Toast.LENGTH_SHORT).show();
+                // Validación en base de datos en hilo secundario
+                new Thread(() -> {
+                    Cliente usuario = clienteDAO.validarLogin(email, password);
+
+                    runOnUiThread(() -> {
+                        if (usuario != null) {
+                            Toast.makeText(this, "¡Bienvenido, " + usuario.getNombre() + "!", Toast.LENGTH_SHORT).show();
+                            // Ir a la pantalla principal
+                            Intent intent = new Intent(this, MainActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(this, "Correo o contraseña incorrectos", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }).start();
             }
         });
 
