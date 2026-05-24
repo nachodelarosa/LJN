@@ -46,6 +46,12 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Refrescando datos...", Toast.LENGTH_SHORT).show();
         });
 
+        ImageButton btnLoginIcon = findViewById(R.id.btnLogin);
+        btnLoginIcon.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+        });
+
         setupFavoriteButton(R.id.btnFavCoche2);
         setupFavoriteButton(R.id.btnFavCoche3);
         setupFavoriteButton(R.id.btnFavCoche4);

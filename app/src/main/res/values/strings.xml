@@ -33,4 +33,14 @@
     <string name="desc_fav">Favorito</string>
     <string name="btn_back">Volver</string>
     <string name="no_coches_encontrados">No se encontraron vehículos en la DB</string>
+    <string name="title_login">Iniciar Sesión</string>
+    <string name="hint_email">Correo Electrónico</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="btn_entrar">Entrar</string>
+    <string name="not_registered">¿No tienes cuenta? </string>
+    <string name="title_register">Crear Cuenta</string>
+    <string name="hint_nombre">Nombre</string>
+    <string name="hint_apellido">Apellido</string>
+    <string name="hint_confirm_password">Confirmar Contraseña</string>
+    <string name="already_have_account">¿Ya tienes cuenta? Inicia sesión</string>
 </resources>
