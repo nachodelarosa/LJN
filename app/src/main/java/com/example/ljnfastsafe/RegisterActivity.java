@@ -1,9 +1,7 @@
 package com.example.ljnfastsafe;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,14 +35,6 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btnRegister);
         tvBackToLogin = findViewById(R.id.tvBackToLogin);
 
-        ImageView logoApp = findViewById(R.id.logoApp);
-        logoApp.setOnClickListener(v -> {
-            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(intent);
-            finish();
-        });
-
         btnRegister.setOnClickListener(v -> {
             String nombre = etNombre.getText().toString();
             String apellido = etApellido.getText().toString();
@@ -60,13 +50,11 @@ public class RegisterActivity extends AppCompatActivity {
                 // Registro en base de datos en hilo secundario
                 new Thread(() -> {
                     Cliente nuevo = new Cliente();
-                    nuevo.setIdCliente(UUID.randomUUID().toString());
+                    nuevo.setIdCliente(UUID.randomUUID().toString()); // Generamos un ID único
                     nuevo.setNombre(nombre);
                     nuevo.setApellidos(apellido);
                     nuevo.setEmail(email);
                     nuevo.setContrasena(pass);
-                    nuevo.setTelefono(""); // Evitar nulos si la DB los requiere
-                    nuevo.setDireccion(""); // Evitar nulos si la DB los requiere
 
                     boolean exito = clienteDAO.insertar(nuevo);
 
@@ -75,7 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(this, "Usuario registrado con éxito", Toast.LENGTH_SHORT).show();
                             finish();
                         } else {
-                            Toast.makeText(this, "Error al registrar. Verifica la conexión o si el email ya existe.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(this, "Error al registrar. El email podría ya existir.", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }).start();
