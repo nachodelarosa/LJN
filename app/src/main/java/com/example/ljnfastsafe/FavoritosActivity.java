@@ -80,9 +80,31 @@ public class FavoritosActivity extends AppCompatActivity {
         // Cargar imagen (reutilizando lógica similar a MainActivity)
         String marca = c.getMarca().toLowerCase().replace(" ", "");
         String modelo = c.getModelo().toLowerCase().replace(" ", "").replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u");
+        
+        // 1. Intentar marca + modelo (ej: hyundaitucson)
         int resId = getResources().getIdentifier(marca + modelo, "drawable", getPackageName());
-        if (resId == 0) resId = getResources().getIdentifier(modelo, "drawable", getPackageName());
-        if (resId != 0) img.setImageResource(resId);
+        
+        // 2. Intentar solo modelo (ej: corolla)
+        if (resId == 0) {
+            resId = getResources().getIdentifier(modelo, "drawable", getPackageName());
+        }
+        
+        // 3. Intentar solo marca (ej: kia)
+        if (resId == 0) {
+            resId = getResources().getIdentifier(marca, "drawable", getPackageName());
+        }
+
+        // 4. Intentar marca + _ + modelo (ej: toyota_corolla)
+        if (resId == 0) {
+            resId = getResources().getIdentifier(marca + "_" + modelo, "drawable", getPackageName());
+        }
+
+        if (resId != 0) {
+            img.setImageResource(resId);
+        } else {
+            // Si no hay imagen, poner el logo o una por defecto
+            img.setImageResource(R.drawable.ljnfastsafe_logo);
+        }
 
         cardView.setOnClickListener(v -> {
             Intent intent = new Intent(this, DetalleVehiculoActivity.class);

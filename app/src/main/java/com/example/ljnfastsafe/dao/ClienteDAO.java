@@ -1,5 +1,6 @@
 package com.example.ljnfastsafe.dao;
 
+import android.util.Log;
 import com.example.ljnfastsafe.model.Cliente;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,7 +34,7 @@ public class ClienteDAO {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Log.e("ClienteDAO", "Error en obtenerTodos: " + e.getMessage());
         }
         return lista;
     }
@@ -46,16 +47,58 @@ public class ClienteDAO {
                     ps.setString(1, c.getIdCliente());
                     ps.setString(2, c.getNombre());
                     ps.setString(3, c.getApellidos());
-                    ps.setString(4, c.getTelefono());
+                    ps.setString(4, c.getTelefono() != null ? c.getTelefono() : "");
                     ps.setString(5, c.getEmail());
-                    ps.setString(6, c.getDireccion());
+                    ps.setString(6, c.getDireccion() != null ? c.getDireccion() : "");
                     ps.setString(7, c.getContrasena());
-                    return ps.executeUpdate() > 0;
+                    
+                    int filas = ps.executeUpdate();
+                    Log.d("ClienteDAO", "Inserción exitosa, filas afectadas: " + filas);
+                    return filas > 0;
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Log.e("ClienteDAO", "Error SQL al insertar cliente: " + e.getMessage());
         }
         return false;
+    }
+
+    public Cliente validarLogin(String email, String password) {
+        String sql = "SELECT * FROM CLIENTES WHERE email = ? AND contrasena = ? AND activo = 'SI'";
+        try (Connection conn = ConexionDB.getConexion()) {
+            if (conn != null) {
+                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                    ps.setString(1, email);
+                    ps.setString(2, password);
+                    try (ResultSet rs = ps.executeQuery()) {
+                        if (rs.next()) {
+                            Cliente c = new Cliente();
+                            c.setIdCliente(rs.getString("id_cliente"));
+                            c.setNombre(rs.getString("nombre"));
+                            c.setApellidos(rs.getString("apellidos"));
+                            c.setEmail(rs.getString("email"));
+                            return c;
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            Log.e("ClienteDAO", "Error en validarLogin: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public void asegurarClienteDummy(String id) {
+        String sql = "INSERT IGNORE INTO CLIENTES (id_cliente, nombre, apellidos, email, contrasena, fecha_registro, activo) VALUES (?, 'Usuario', 'Prueba', 'prueba@test.com', '1234', CURRENT_DATE, 'SI')";
+        try (Connection conn = ConexionDB.getConexion()) {
+            if (conn != null) {
+                try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                    ps.setString(1, id);
+                    ps.executeUpdate();
+                }
+            }
+        } catch (SQLException e) {
+            Log.e("ClienteDAO", "Error al asegurar cliente dummy: " + e.getMessage());
+        }
     }
 }
