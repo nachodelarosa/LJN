@@ -59,11 +59,11 @@
                 android:id="@+id/txtPrecio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="$0.00"
-                android:textSize="22sp"
                 android:layout_marginTop="8dp"
+                android:text="$0.00"
                 android:textColor="#2E7D32"
-                android:textStyle="bold"/>
+                android:textSize="22sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
